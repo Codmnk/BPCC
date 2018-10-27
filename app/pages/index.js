@@ -9,31 +9,20 @@ export default class index extends Component {
   render() {
     return (
       <SingleColLayout>
-        <Jumbotron className="text-light rounded-0">
-          <Container className="mt-2 mb-2 home-top-banner">
+        <Jumbotron className="text-light rounded-0 home-top-banner">
+          <Container className="mt-2 mb-2">
             <h1
               className="display-2 mb-3"
               style={{
-                fontWeight: 300,
+                fontWeight: 600,
               }}
             >
-              <span style={{ fontWeight: 600 }}>
-                <br className="v-block d-sm-none" />
-                Next.js
-              </span>
               <br className="v-block d-lg-none" /> Shop Anywhere, Travel
               Everywhere
             </h1>
           </Container>
         </Jumbotron>
-        <style jsx>{`
-          .home-top-banner {
-            background: url(https://images.unsplash.com/photo-1512909006721-3d6018887383?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5d296404a6f050d177dcfe698bc2cd2f&auto=format&fit=crop&w=600&q=60);
-          }
-          body {
-            background: red;
-          }
-        `}</style>
+        <style jsx global>{``}</style>
       </SingleColLayout>
     )
   }

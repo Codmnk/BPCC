@@ -13,10 +13,6 @@ app.prepare().then(() => {
     return handle(req, res)
   })
 
-  server.get('/b', (req, res) => {
-    return app.render(req, res, '/index', req.query)
-  })
-
   server.get('/posts/:id', (req, res) => {
     return app.render(req, res, '/posts', { id: req.params.id })
   })

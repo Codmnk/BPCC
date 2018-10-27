@@ -16,6 +16,8 @@ import {
   DropdownItem,
 } from 'reactstrap'
 
+import Styles from '../../../assets/css/style.css'
+
 export default class Header extends React.Component {
   constructor(props) {
     super(props)
@@ -40,6 +42,7 @@ export default class Header extends React.Component {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <title>{this.props.title || 'Backpacker Courrier'}</title>
 
+          <style dangerouslySetInnerHTML={{ __html: Styles }} />
           <script src="https://cdn.polyfill.io/v2/polyfill.min.js" />
         </Head>
         <div>
@@ -69,6 +72,17 @@ export default class Header extends React.Component {
                 <NavItem>
                   <Link href="/login/">
                     <a className="nav-link">Login</a>
+                  </Link>
+                </NavItem>
+
+                <NavItem>
+                  <Link href="/login/">
+                    <button
+                      className="nav-link btn btn-warning"
+                      style={{ fontWeight: 700 }}
+                    >
+                      Place Order
+                    </button>
                   </Link>
                 </NavItem>
               </Nav>

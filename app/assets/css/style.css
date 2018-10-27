@@ -1,0 +1,25 @@
+.home-top-banner {
+  background: url(https://images.unsplash.com/photo-1512909006721-3d6018887383?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5d296404a6f050d177dcfe698bc2cd2f&auto=format&fit=crop&w=600&q=60)
+    no-repeat center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+a {
+  color: #fff;
+}
+a.nav-link {
+  color: #fff;
+  font-weight: 700;
+}
+
+.lead {
+  font-size: 1.4em;
+}
+
+footer.page-footer {
+  background: #212529;
+  color: #fff;
+}
