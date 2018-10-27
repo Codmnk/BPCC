@@ -6,14 +6,17 @@
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
     "bootstrap": "^4.1.3",
+    "express": "^4.16.4",
     "next": "^7.0.2",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "reactstrap": "^6.5.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^1.18.5"
+  },
   "scripts": {
-    "dev": "next",
+    "dev": "nodemon server",
     "build": "next build",
     "start": "next start"
   },
