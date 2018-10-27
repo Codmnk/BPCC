@@ -11,7 +11,7 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="page-footer font-small pt-4">
+    <footer className="page-footer font-small pt-4 mt-5">
       {/* <!-- Footer Links --> */}
       <div className="container-fluid text-center text-md-left">
         {/* <!-- Grid row --> */}

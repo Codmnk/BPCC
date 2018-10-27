@@ -5,6 +5,9 @@ import { Container, Row, Col, Jumbotron } from 'reactstrap'
 
 import SingleColLayout from '../components/layouts/SingleColLayout'
 
+import RecentlyCompleteOrders from '../components/home/RecentlyCompleteOrders'
+import HowItWorks from '../components/home/HowItWorks'
+
 export default class index extends Component {
   render() {
     return (
@@ -22,6 +25,12 @@ export default class index extends Component {
             </h1>
           </Container>
         </Jumbotron>
+        <Container>
+          <Row>
+            <RecentlyCompleteOrders />
+            <HowItWorks />
+          </Row>
+        </Container>
         <style jsx global>{``}</style>
       </SingleColLayout>
     )
