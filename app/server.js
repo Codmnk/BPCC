@@ -9,12 +9,20 @@ const handle = app.getRequestHandler()
 app.prepare().then(() => {
   const server = express()
 
-  server.get('*', (req, res) => {
+  server.get('/', (req, res) => {
     return handle(req, res)
   })
 
-  server.get('/home', (req, res) => {
-    res.send('hello from express')
+  server.get('/b', (req, res) => {
+    return app.render(req, res, '/index', req.query)
+  })
+
+  server.get('/posts/:id', (req, res) => {
+    return app.render(req, res, '/posts', { id: req.params.id })
+  })
+
+  server.get('*', (req, res) => {
+    return handle(req, res)
   })
 
   server.listen(port, err => {
