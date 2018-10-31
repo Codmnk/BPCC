@@ -6,9 +6,9 @@ const mysql = require('mysql')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 // const passport = require('passport')
-// const expressValidator = require('express-validator')
-const publicRoutes = require('./src/routers/publicRoutes')
-const privateRoutes = require('./src/routers/privateRoutes')
+const expressValidator = require('express-validator')
+
+const routes = require('./src/routes/routes')
 
 const port = process.env.PORT || 3030
 
@@ -20,10 +20,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 // express validator for form data validation
-// app.use(expressValidator())
+app.use(expressValidator())
 
-publicRoutes(app)
-privateRoutes(app)
+routes(app)
 
 app.get('/', (req, res) => {
   res.send('OOPS! Nothing to show!')
