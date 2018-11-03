@@ -1,9 +1,9 @@
-// INSTALL REDIS
-// SET UP REDIS CONNECION
+const pool = require('../config/database')
 
 const jwt = require('jsonwebtoken')
 const redis = require('redis')
-const bcrypt = require('bcryptjs')
+
+const { hashVerify } = require('../helpers/bcryptHelper')
 
 const signToken = email => {
   const jwtPayload = { email }
@@ -17,8 +17,22 @@ const getAuthTokenId = () => {
   // to do
 }
 
-const handleSignin = () => {
-  //to do
+const handleSignin = user => {
+  const { uEmail, uPassword } = user
+
+  if (!uEmail || !uPassword) {
+    console.log(' incorrect user')
+    return Promise.reject('incorrect credentials')
+  }
+  return new Promise((resolve, reject) => {
+    pool.query('SELECT * FROM users WHERE uEmail = ?', [uEmail], async (err, data) => {
+      if (err) return reject('Failed to check from databse')
+
+      const isValid = await hashVerify(user.uPassword, data[0].uPassword)
+
+      return !err && data && isValid ? resolve(data) : reject('Incorrect credentials')
+    })
+  })
 }
 
 const crateSessions = user => {
@@ -34,5 +48,5 @@ module.exports = {
   getAuthTokenId: getAuthTokenId,
   handleSignin: handleSignin,
   crateSessions: crateSessions,
-  signinAuthentication: signinAuthentication,
+  signinAuthentication: signinAuthentication
 }

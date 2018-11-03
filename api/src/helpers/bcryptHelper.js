@@ -1,16 +1,16 @@
-const bcrypt = require('bcrypt-nodejs')
+const bcrypt = require('bcryptjs')
 
 const hashPassword = pass => {
-  const hashPass = bcrypt.hashSync(pass)
+  const hashPass = bcrypt.hashSync(pass, 10)
   return hashPass
 }
 
-const hashVerify = pass => {
-  const isValid = bcrypt.compareSync(pass, hashPassword)
+const hashVerify = (userPass, hashPass) => {
+  const isValid = bcrypt.compareSync(userPass, hashPass)
   return isValid
 }
 
 module.exports = {
   hashPassword: hashPassword,
-  hashVerify: hashVerify,
+  hashVerify: hashVerify
 }

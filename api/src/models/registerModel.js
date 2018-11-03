@@ -1,4 +1,5 @@
-const pool = require('../config/database') //db connection available globally
+const pool = require('../config/database')
+const { hashPassword } = require('../helpers/bcryptHelper')
 
 //sql prepare statement for
 // var sql = "SELECT * FROM ?? WHERE ?? = ?";
@@ -18,18 +19,11 @@ const uniqueEntryCheck = (key, value) => {
         resolve('Not Found')
       })
     }
-
-    // if (key === 'Mobile') {
-    //   pool.query('SELECT uId FROM users WHERE uMobile = ?', [value], (err, result) => {
-    //     if (err) reject(err)
-
-    //     resolve(result)
-    //   })
-    // }
   })
 }
 
-const createUser = frmData => {
+const createUser = async frmData => {
+  frmData.uPassword = await hashPassword(frmData.uPassword)
   return new Promise((resolve, reject) => {
     pool.query('INSERT INTO users SET ?', [frmData], (err, result) => {
       if (err) {
@@ -54,5 +48,5 @@ const getUser = userId => {
 module.exports = {
   uniqueEntryCheck: uniqueEntryCheck,
   createUser: createUser,
-  getUser: getUser,
+  getUser: getUser
 }

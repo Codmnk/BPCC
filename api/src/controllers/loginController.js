@@ -1,19 +1,14 @@
-const { getAuthTokenId, handleSignin, crateSessions } = require('../models/loginModel')
+const { loginAuthentication } = require('../middlewares/authMiddleware')
 
-const signinAuthentication = (req, res) => {
-  const { uEmail, uPass } = req.body
-  const { authorization } = req.headers
+const loginController = (req, res) => {
+  //TODO: check authorize header, if exist, verify check in redis and response
 
-  return authorization
-    ? getAuthTokenId(req, res)
-    : handleSignin(req)
-        .then(data => {
-          return data.id && data.email ? crateSessions(data) : Promise.reject(data)
-        })
-        .then(session => res.json(session))
-        .catch(err => res.status(400).json(err))
+  loginAuthentication(req, res) //return jwt token
+
+  //TODO: check authorize header doesn't exist verify credentials and issue the jwt and response
+  // res.send('hit the login controller')
 }
 
 module.exports = {
-  signinAuthentication: signinAuthentication,
+  loginController: loginController
 }

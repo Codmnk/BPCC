@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+require('dotenv').config()
 const cors = require('cors')
 const helmet = require('helmet')
 const mysql = require('mysql')
@@ -7,7 +8,6 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 // const passport = require('passport')
 const expressValidator = require('express-validator')
-require('dotenv').config()
 const routes = require('./src/routes/routes')
 
 const port = process.env.PORT || 3030
@@ -24,8 +24,8 @@ app.use(expressValidator())
 
 routes(app)
 
-app.get('/', (req, res) => {
-  res.send('OOPS! Nothing to show!')
+app.get('*', (req, res) => {
+  res.status(404).send('OOPS! Page not found!')
 })
 
 // Load router

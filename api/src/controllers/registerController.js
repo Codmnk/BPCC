@@ -1,11 +1,10 @@
+// TODO: send a email verification link to verify user and active the user account
+
 const { uniqueEntryCheck, createUser, getUser } = require('../models/registerModel')
 
-// SENATIZE TEH USER Data
-// SEND DATA TO REGISTER MODEL TO STORE IN TEH DATABASE
-// SEND ACCOUNT CREATION CONFIRMATION EMAIL TO VERY EMAIL AND PHONE
-const register = async (req, res, next) => {
+const registerController = async (req, res, next) => {
   let frmData = req.body
-  console.log('register is hit')
+
   try {
     const checkEmail = await uniqueEntryCheck('Email', frmData.uEmail)
 
@@ -26,5 +25,5 @@ const register = async (req, res, next) => {
 }
 
 module.exports = {
-  register: register
+  registerController: registerController
 }
