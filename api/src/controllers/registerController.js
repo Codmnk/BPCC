@@ -3,7 +3,6 @@ const { uniqueEntryCheck, createUser, getUser } = require('../models/registerMod
 // SENATIZE TEH USER Data
 // SEND DATA TO REGISTER MODEL TO STORE IN TEH DATABASE
 // SEND ACCOUNT CREATION CONFIRMATION EMAIL TO VERY EMAIL AND PHONE
-
 const register = async (req, res, next) => {
   let frmData = req.body
   console.log('register is hit')

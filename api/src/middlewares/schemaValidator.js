@@ -17,11 +17,8 @@ const loginValidation = (req, res, next) => {
 const registrationValidation = (req, res, next) => {
   return Joi.validate(req.body, registerSchema, (err, data) => {
     if (err) {
-      console.log('invalid data')
       res.status(400).send({ Message: 'Invalid submition' })
     } else if (!err && data) {
-      console.log('valid data')
-      console.log(data)
       req.body = data
       next()
     }

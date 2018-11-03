@@ -7,7 +7,7 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 // const passport = require('passport')
 const expressValidator = require('express-validator')
-
+require('dotenv').config()
 const routes = require('./src/routes/routes')
 
 const port = process.env.PORT || 3030
