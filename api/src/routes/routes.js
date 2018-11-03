@@ -19,10 +19,10 @@ const routes = app => {
     .post((req, res) => {
       register(req, res)
     })
-}
 
-//Login
-app.route('/login').post(signinAuthentication)
+  //Login
+  app.route('/login').post(signinAuthentication)
+}
 
 //expose routes
 module.exports = routes
