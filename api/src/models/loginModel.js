@@ -3,6 +3,9 @@ const pool = require('../config/database')
 const jwt = require('jsonwebtoken')
 const redis = require('redis')
 
+// SETUP REDIS:
+const redisClient = redis.createClient(process.env.REDIS_URI)
+
 const { hashVerify } = require('../helpers/bcryptHelper')
 
 const signToken = email => {
@@ -10,9 +13,6 @@ const signToken = email => {
   return jwt.sign(jwtPayload, 'jwt-super-secret')
 }
 
-const setToken = (key, value) => {
-  // set jwt in redish with the key-value pair
-}
 const getAuthTokenId = () => {
   // to do
 }
@@ -40,13 +40,15 @@ const crateSessions = user => {
   const { uEmail, uId } = user
   const token = signToken(uEmail)
 }
-const signinAuthentication = () => {
-  //to do
-}
 
+const logoutModel = (req, res) => {
+  const { token } = req.headers
+  token && redisClient.hdel(token)
+  res.status(400).send('Logged Out')
+}
 module.exports = {
   getAuthTokenId: getAuthTokenId,
   handleSignin: handleSignin,
   crateSessions: crateSessions,
-  signinAuthentication: signinAuthentication
+  logoutModel: logoutModel
 }

@@ -1,1 +1,2 @@
 ini_setup/seed/*.sql
+**/node_modules/**

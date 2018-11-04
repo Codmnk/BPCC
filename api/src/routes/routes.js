@@ -1,5 +1,5 @@
 const { registerController } = require('../controllers/registerController')
-const { loginController } = require('../controllers/loginController')
+const { loginController, logoutController } = require('../controllers/loginController')
 
 const { registrationValidation } = require('../middlewares/schemaValidator')
 
@@ -13,6 +13,9 @@ const routes = app => {
 
   // Login
   app.route('/login').post(loginController)
+
+  // logout
+  app.route('/logout').post(logoutController)
 }
 
 //expose routes
