@@ -59,12 +59,12 @@ export default class Header extends React.Component {
               <Nav className="ml-auto" navbar>
                 <NavItem>
                   <Link href="/earn-money/">
-                    <a className="nav-link">Earn Mobey</a>
+                    <a className="nav-link">Earn Money</a>
                   </Link>
                 </NavItem>
 
                 <NavItem>
-                  <Link href="/sign-up/">
+                  <Link href="/register/">
                     <a className="nav-link">Sign UP</a>
                   </Link>
                 </NavItem>

@@ -14,10 +14,6 @@ import {
 } from 'reactstrap'
 
 export default class HowItWorks extends Component {
-  static propTypes = {
-    prop: PropTypes,
-  }
-
   render() {
     return (
       <React.Fragment>

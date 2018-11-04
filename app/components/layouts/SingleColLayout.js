@@ -6,10 +6,13 @@ import Footer from './partials/Footer'
 export default class SingleColLayout extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      isLoginFrmOpen: false,
+    }
   }
 
   render() {
+    const { isLoginFrmOpen } = this.state
     return (
       <div>
         <Header />

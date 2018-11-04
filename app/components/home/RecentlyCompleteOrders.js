@@ -14,10 +14,6 @@ import {
 } from 'reactstrap'
 
 export default class RecentlyCompleteOrders extends Component {
-  static propTypes = {
-    prop: PropTypes,
-  }
-
   render() {
     return (
       <Container>
