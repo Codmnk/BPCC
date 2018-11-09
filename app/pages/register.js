@@ -1,6 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
 import SingleColLayout from '../components/layouts/SingleColLayout'
+import axios from 'axios'
+
 import {
   Button,
   Form,
@@ -15,6 +17,7 @@ import {
 } from 'reactstrap'
 import './loginNregister.css'
 
+const apiUrl = process.env.API_URL || 'http://localhost:3030'
 const initialState = {
   formData: {
     uFirstName: '',
@@ -37,7 +40,7 @@ const initialState = {
 
 const charStrOnly = RegExp(/^[a-zA-Z]+$/)
 const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!_@#$%^&*])(?=.{6,25})/
-const registerAPI = 'http://localhost:3030/register'
+const apiEndPoint = `${apiUrl}/register`
 
 const isFormValid = formErr => {
   let valid = true
@@ -119,6 +122,7 @@ export default class register extends React.Component {
       default:
         return
     }
+
     this.setState(
       prevState => ({
         ...prevState,
@@ -147,14 +151,31 @@ export default class register extends React.Component {
   handleSubmit = e => {
     e.preventDefault()
 
-    isFormValid(this.state.formErrors) &&
-      console.log('submit the form online', this.state.formData) &&
-      this.frmReset()
-    console.log('state should be empty', this.state.formData)
+    if (isFormValid(this.state.formErrors)) {
+      console.log('submit the form online' /*this.state.formData*/)
 
-    //send data to api
-    //reset the form
-    //this.frmReset()
+      let {
+        uFirstName,
+        uLastName,
+        uEmail,
+        uMobile,
+        uPassword,
+      } = this.state.formData
+      //Post data with axios
+      axios
+        .post(apiEndPoint, {
+          uFirstName,
+          uLastName,
+          uEmail,
+          uMobile,
+          uPassword,
+        })
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => console.log(error))
+    }
+    console.log("Invalid form, couldn't post the data")
   }
 
   render() {
