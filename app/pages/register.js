@@ -11,10 +11,152 @@ import {
   Jumbotron,
   ListGroup,
   ListGroupItem,
+  Alert,
 } from 'reactstrap'
 import './loginNregister.css'
 
+const initialState = {
+  formData: {
+    uFirstName: '',
+    uLastName: '',
+    uEmail: '',
+    uMobile: '',
+    uPassword: '',
+    uCPassword: '',
+  },
+  formErrors: {
+    uFirstName: '',
+    uLastName: '',
+    uEmail: '',
+    uMobile: '',
+    uPassword: '',
+    uCPassword: '',
+  },
+  isSubmitable: false,
+}
+
+const charStrOnly = RegExp(/^[a-zA-Z]+$/)
+const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!_@#$%^&*])(?=.{6,25})/
+const registerAPI = 'http://localhost:3030/register'
+
+const isFormValid = formErr => {
+  let valid = true
+  Object.values(formErr).forEach(val => {
+    val.length > 0 && (valid = false)
+  })
+  return valid
+}
+
 export default class register extends React.Component {
+  constructor() {
+    super()
+    this.state = initialState
+  }
+
+  handleChange = e => {
+    e.preventDefault()
+    const { name, value } = e.target
+    let formData = this.state.formData
+    let formErrors = this.state.formErrors
+
+    let err
+    switch (name) {
+      case 'uFirstName':
+        formData.uFirstName = value
+        formErrors.uFirstName =
+          charStrOnly.test(value) && 3 < value.length && value.length < 30
+            ? ''
+            : 'Name can contain alphabet only and length between 3 and 30 characters'
+        // this.updateDataNError(name, value, err)
+        break
+
+      case 'uLastName':
+        formData.uLastName = value
+        formErrors.uLastName =
+          charStrOnly.test(value) && 3 < value.length && value.length < 30
+            ? ''
+            : 'Last Name can contain alphabet only and length between 3 and 30 characters'
+        // this.updateDataNError(name, value, err)
+        break
+
+      case 'uEmail':
+        formData.uEmail = value
+        formErrors.uEmail =
+          /@/.test(value) && 3 < value.length && value.length < 60
+            ? ''
+            : 'Invalid Email'
+        this.updateDataNError(name, value, err)
+        break
+
+      case 'uMobile':
+        formData.uMobile = value
+        formErrors.uMobile =
+          +value && 9 < value.length && value.length < 15
+            ? ''
+            : 'Invalid mobile number'
+        this.updateDataNError(name, value, err)
+        break
+
+      case 'uPassword':
+        formData.uPassword = value
+        formErrors.uPassword =
+          passRegex.test(value) && 6 < value.length && value.length < 25
+            ? ''
+            : 'Please satisfy the following conditions:'
+        this.updateDataNError(name, value, err)
+        break
+
+      case 'uCPassword':
+        console.log(this.state.formData.uPassword, '.............')
+        formData.uCPassword = value
+        formErrors.uCPassword =
+          formData.uCPassword == formData.uPassword
+            ? ''
+            : 'Password does not match'
+
+        break
+
+      default:
+        return
+    }
+    this.setState(
+      prevState => ({
+        ...prevState,
+        formData,
+        formErrors,
+      }),
+      () =>
+        isFormValid(this.state.formErrors)
+          ? this.setState({ isSubmitable: true })
+          : this.setState({ isSubmitable: false })
+    )
+  }
+
+  updateDataNError = (name, value, err) => {
+    this.setState({
+      formData: { [name]: value },
+      formErrors: { [name]: err },
+      isSubmitable: err ? false : true,
+    })
+  }
+
+  frmReset = () => {
+    this.setState(initialState)
+  }
+
+  handleSubmit = e => {
+    e.preventDefault()
+
+    isFormValid(this.state.formErrors) &&
+      console.log('submit the form online', this.state.formData) &&
+      this.frmReset()
+    console.log('state should be empty', this.state.formData)
+
+    //send data to api
+    //reset the form
+    //this.frmReset()
+  }
+
   render() {
     return (
       <SingleColLayout>
@@ -22,81 +164,129 @@ export default class register extends React.Component {
           <Jumbotron className="rounded-5 registerForm">
             <h2 className="display-5 font-weight-bold">Register</h2>
             <hr className="my-2" />
-            <Form>
+            <Form autoComplete="off" onSubmit={this.handleSubmit}>
               <FormGroup>
                 <Label for="userFirstname">First Name</Label>
+                <span className="requireFrmFieldMark">*</span>
                 <Input
+                  onChange={this.handleChange}
                   type="text"
                   name="uFirstName"
                   id="userFirstname"
                   placeholder="First Name"
                   required
                 />
+                {this.state.formErrors.uFirstName && (
+                  <Alert color="danger">
+                    {this.state.formErrors.uFirstName}
+                  </Alert>
+                )}
               </FormGroup>
               <FormGroup>
                 <Label for="userLastName">Last Name</Label>
+                <span className="requireFrmFieldMark">*</span>
                 <Input
+                  onChange={this.handleChange}
                   type="text"
                   name="uLastName"
                   id="userLastName"
                   placeholder="Last Name"
+                  required
                 />
+                {this.state.formErrors.uLastName && (
+                  <Alert color="danger">
+                    {this.state.formErrors.uLastName}
+                  </Alert>
+                )}
               </FormGroup>
               <FormGroup>
                 <Label for="userEmail">Email</Label>
+                <span className="requireFrmFieldMark">*</span>
                 <Input
-                  type="uEmail"
+                  onChange={this.handleChange}
+                  type="email"
                   name="uEmail"
                   id="userEmail"
                   placeholder="example@email.com"
+                  required
                 />
+                {this.state.formErrors.uEmail && (
+                  <Alert color="danger">{this.state.formErrors.uEmail}</Alert>
+                )}
               </FormGroup>
               <FormGroup>
                 <Label for="userMobile">Mobile</Label>
                 <Input
+                  onChange={this.handleChange}
                   type="number"
                   name="uMobile"
                   id="userMobile"
                   placeholder="Include your country code"
                 />
+                {this.state.formErrors.uMobile && (
+                  <Alert color="danger">{this.state.formErrors.uMobile}</Alert>
+                )}
               </FormGroup>
               <FormGroup>
                 <Label for="userPassword">Password</Label>
+                <span className="requireFrmFieldMark">*</span>
                 <Input
+                  onChange={this.handleChange}
                   type="password"
                   name="uPassword"
                   id="userPassword"
                   placeholder="Password"
+                  required
                 />
+
+                {this.state.formErrors.uPassword && (
+                  <Alert color="danger">
+                    {this.state.formErrors.uPassword}
+                  </Alert>
+                )}
+                <Label> Password must contain the followings:</Label>
+                <ul>
+                  <li>Length between 6 and 25</li>
+                  <li>Lower and upper case</li>
+                  <li>Number</li>
+                  <li>Special chatecter</li>
+                </ul>
               </FormGroup>
               <FormGroup>
-                <Label for="userConfirmPassword">Password</Label>
+                <Label for="userConfirmPassword">Confirm Password</Label>
+                <span className="requireFrmFieldMark">*</span>
                 <Input
+                  onChange={this.handleChange}
                   type="password"
                   name="uCPassword"
                   id="userConfirmPassword"
                   placeholder="Confirm Password"
+                  required
                 />
+                {this.state.formErrors.uCPassword && (
+                  <Alert color="danger">
+                    {this.state.formErrors.uCPassword}
+                  </Alert>
+                )}
               </FormGroup>
-              <FormGroup>
-                <Label for="Password must contain the following:">
-                  Password
-                </Label>
-                <ListGroup>
-                  <ListGroupItem>
-                    character Length between 6 and 25
-                  </ListGroupItem>
-                  <ListGroupItem>Lower and upper case</ListGroupItem>
-                  <ListGroupItem>Number</ListGroupItem>
-                  <ListGroupItem>Special chatecter</ListGroupItem>
-                </ListGroup>
-              </FormGroup>
+
               <FormGroup check>
                 <Label check>
-                  <Input type="checkbox" /> I accept the T&Cs of this site.
+                  <Input
+                    onChange={this.handleChange}
+                    type="checkbox"
+                    name="checkBox"
+                    required
+                  />
+                  {' I accept the T&Cs of this site. '}
+                  {this.state.formErrors.checkBox && (
+                    <Alert color="danger">
+                      {this.state.formErrors.checkBox}
+                    </Alert>
+                  )}
                 </Label>
               </FormGroup>
-              <Button>Submit</Button>
+              <Button disabled={!this.state.isSubmitable}>Submit</Button>
             </Form>
             <hr className="my-2" />
             <p>

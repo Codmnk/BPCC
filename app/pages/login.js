@@ -44,7 +44,7 @@ export default class login extends React.Component {
 
       case 'uPassword':
         passErr =
-          value.length < 6 ? 'Password must have minimum of 6 characters' : ''
+          value.length > 30 ? 'Password must have maximum of 30 characters' : ''
         break
 
       default:
@@ -104,7 +104,12 @@ export default class login extends React.Component {
                   <Input type="checkbox" /> Remember Me
                 </Label>
               </FormGroup>
-              <Button>Submit</Button>
+              <Button
+                color="primary"
+                disabled={uEmailErr || uPasswordErr ? 'disabled' : false}
+              >
+                Submit
+              </Button>
               <p>
                 <Link href="/resetPassword">
                   <a>Forget Password ?</a>
