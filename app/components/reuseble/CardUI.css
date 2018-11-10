@@ -1,0 +1,76 @@
+.rcoCard {
+  display: flex;
+  flex-basis: 32%;
+  transition: all 0.5s;
+}
+
+.rcoCard:hover {
+  flex-basis: 33%;
+  box-shadow: -5px 5px 20px rgba(110, 108, 112, 0.5);
+}
+
+.homeCards {
+  background: #ffffe7;
+  width: 100%;
+}
+
+.sNt {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.travelerCrd,
+.shopperCrd {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.img-icone {
+  border: 1px solid rgba(110, 108, 112, 0.5);
+  border-radius: 50%;
+}
+
+.earnNSave {
+  padding: 5px 5px;
+  width: 90%;
+  background: #ff470d;
+  border-radius: 10px;
+  color: rgb(250, 244, 244);
+  font-weight: 800;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.stt {
+  font-weight: 700;
+  color: rgb(129, 121, 121);
+}
+.rcoUN {
+  font-weight: bolder;
+  color: rgb(184, 173, 173);
+}
+
+.rcoUA {
+  font-weight: bold;
+  color: rgb(218, 206, 206);
+}
+
+.card-prod-image {
+  width: 100%;
+  max-height: 320px;
+}
+
+/* Media query */
+@media (max-width: 768px) {
+  .rcoCard {
+    flex-wrap: wrap;
+    flex-basis: 90%;
+    margin: 5px;
+  }
+  .rcoCard:hover {
+    flex-basis: 95%;
+    box-shadow: -5px 5px 20px rgba(110, 108, 112, 0.5);
+  }
+}
