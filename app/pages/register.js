@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import SingleColLayout from '../components/layouts/SingleColLayout'
+import SingleColLayout from '../containers/layouts/SingleColLayout'
 import axios from 'axios'
 
 import {

@@ -16,7 +16,7 @@ import {
   DropdownItem,
 } from 'reactstrap'
 
-import Styles from '../../../pages/index.css'
+import Styles from '../../pages/index.css'
 
 export default class Header extends React.Component {
   constructor(props) {

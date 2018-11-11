@@ -4,10 +4,10 @@ import Link from 'next/link'
 import Particles from 'react-particles-js'
 import { Container, Row, Col, Jumbotron } from 'reactstrap'
 
-import SingleColLayout from '../components/layouts/SingleColLayout'
+import SingleColLayout from '../containers/layouts/SingleColLayout'
 
-import RecentlyCompleteOrders from '../components/home/RecentlyCompleteOrders'
-import HowItWorks from '../components/home/HowItWorks'
+import RecentlyCompleteOrders from '../containers/home/RecentlyCompleteOrders'
+import HowItWorks from '../containers/home/HowItWorks'
 
 const initialState = {
   pageTitle: '',

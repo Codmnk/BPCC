@@ -2,17 +2,24 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import './RecentlyCompleteOrders.css'
-import CardUI from '../reuseble/CardUI'
+import CardUI from '../../components/cards/CardUI'
 
-import { Container, Row, Button } from 'reactstrap'
+import { Button } from 'reactstrap'
 
 export default class RecentlyCompleteOrders extends Component {
+  static async getInitialProps({ req }) {
+    const userAgent = 'here you go'
+    console.log('.....', userAgent)
+
+    return { userAgent }
+  }
   render() {
     return (
       <div className="home-container">
         <section className="text-center">
           <h2>Recently Complete Orders</h2>
           <p className="font-italic">
+            {this.props.userAgent}
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Ipsum has been the industry's standard dummy text ever
             since the 1500s
