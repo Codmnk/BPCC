@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
-import Header from './partials/Header'
-import Footer from './partials/Footer'
+import Header from '../../components/partials/Header'
+import Footer from '../../components/partials/Footer'
 
 export default class SingleColLayout extends Component {
   constructor(props) {

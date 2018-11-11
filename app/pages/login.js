@@ -1,5 +1,5 @@
 import React from 'react'
-import SingleColLayout from '../components/layouts/SingleColLayout'
+import SingleColLayout from '../containers/layouts/SingleColLayout'
 import Link from 'next/link'
 import {
   Button,
