@@ -37,7 +37,8 @@ export default class HowItWorksHeader extends Component {
           <Col>
             <Button
               outline
-              color="primary stlink"
+              color="primary"
+              className="stlink"
               onClick={() => this.handleBtnClick('shopper')}
             >
               For Shopper
@@ -46,8 +47,9 @@ export default class HowItWorksHeader extends Component {
 
           <Col>
             <Button
+              className="stlink"
               outline
-              color="info stlink"
+              color="warning"
               onClick={() => this.handleBtnClick('traveler')}
             >
               For Traveler
