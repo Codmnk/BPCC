@@ -1,6 +1,7 @@
 import React from 'react'
 import SingleColLayout from '../src/components/layouts/SingleColLayout'
 import Link from 'next/link'
+import Router from 'next/router'
 import axios from 'axios'
 import {
   Button,
@@ -97,6 +98,7 @@ export default class login extends React.Component {
 
   saveAuthTokenSession = token => {
     window.sessionStorage.setItem('token', token)
+    Router.push('/customer')
   }
   render() {
     const { uEmailErr, uPasswordErr } = this.state

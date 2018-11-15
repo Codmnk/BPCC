@@ -9,14 +9,6 @@ const handle = app.getRequestHandler()
 app.prepare().then(() => {
   const server = express()
 
-  server.get('/posts/:id', (req, res) => {
-    return app.render(req, res, '/posts', { id: req.params.id })
-  })
-
-  server.get('/', (req, res) => {
-    return app.render(req, res, '/', { id: req.params.id })
-  })
-
   server.get('/login', (req, res) => {
     return app.render(req, res, '/login')
   })
@@ -25,8 +17,18 @@ app.prepare().then(() => {
     return app.render(req, res, '/register')
   })
 
-  server.get('/user', (req, res) => {
-    return app.render(req, res, '/user')
+  server.get(
+    '/customer/:slug?',
+    /** use auth middleware */ (req, res) => {
+      return app.render(req, res, '/', {
+        query: req.params,
+        path: 'customer',
+      })
+    }
+  )
+
+  server.get('/', (req, res) => {
+    return app.render(req, res, '/', { query: req.params, path: 'home' })
   })
 
   server.get('*', (req, res) => {

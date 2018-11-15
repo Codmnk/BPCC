@@ -2,20 +2,13 @@ import React, { Component } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import Home from '../src/containers/home'
-// import { Container, Row, Col, Jumbotron } from 'reactstrap'
-
-// import SingleColLayout from '../src/containers/layouts/SingleColLayout'
-
-// import RecentlyCompleteOrders from '../src/containers/home/RecentlyCompleteOrders'
-// import HowItWorks from '../src/containers/home/HowItWorks'
-
-// import layout from '../src/App'
+import Customer from '../src/containers/customers'
 
 const initialState = {
   pageTitle: '',
   input: '',
   imageUrl: '',
-  Page2Load: 'Home',
+  Page2Load: '',
   isSignedIn: false,
   isprofileOpen: false,
   user: {
@@ -30,14 +23,33 @@ const initialState = {
   recentlyAddedOrder: {},
 }
 export default class index extends Component {
-  constructor() {
-    super()
-    this.state = initialState
+  static async getInitialProps({ req, query }) {
+    return query
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      initialState,
+    }
+  }
+
+  getLayout(uri) {
+    switch (uri) {
+      case 'customer':
+        return Customer
+        break
+      default:
+        return Home
+    }
   }
 
   render() {
-    const { Page2Load } = this.state
+    const { pageInfo } = this.state
+    const { path } = this.props
 
-    return <Home />
+    const Layout = this.getLayout(path)
+
+    return <Layout />
   }
 }

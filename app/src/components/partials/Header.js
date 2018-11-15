@@ -1,6 +1,11 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import Head from 'next/head'
 import Link from 'next/link'
+import Router from 'next/router'
+
+import NotLoginedInTopMenu from './topMenu/NotLoginedInTopMenu'
+import LoginedInTopMenu from './topMenu/LoginedInTopMenu'
 
 import {
   Collapse,
@@ -34,7 +39,22 @@ export default class Header extends React.Component {
       isOpen: !this.state.isOpen,
     })
   }
+  async componentDidMount() {
+    const jwt = await window.sessionStorage.getItem('token')
+    // jwt = await JSON.parse(jwt)
+    console.log(jwt)
+    jwt && this.setState({ isLoginedIn: true })
+  }
 
+  logOut() {
+    console.log('you hit this')
+    window.sessionStorage.removeItem('token')
+
+    Router.push('/')
+    // this.setState({
+    //   isLoginedIn: false,
+    // })
+  }
   render() {
     return (
       <React.Fragment>
@@ -64,17 +84,11 @@ export default class Header extends React.Component {
                   </Link>
                 </NavItem>
 
-                <NavItem>
-                  <Link href="/register/">
-                    <a className="nav-link">Sign UP</a>
-                  </Link>
-                </NavItem>
-
-                <NavItem>
-                  <Link href="/login/">
-                    <a className="nav-link">Login</a>
-                  </Link>
-                </NavItem>
+                {this.state.isLoginedIn ? (
+                  <LoginedInTopMenu logout={this.logOut} />
+                ) : (
+                  <NotLoginedInTopMenu />
+                )}
 
                 <NavItem>
                   <Link href="/login/">

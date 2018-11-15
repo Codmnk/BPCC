@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 
 import Header from '../../components/partials/Header'
 import Footer from '../../components/partials/Footer'
+import UserLeftMenu from '../partials/UserLeftMenu'
+
+import { Container, Row, Col } from 'reactstrap'
 
 class LeftSideDoubleColLayout extends Component {
   constructor(props) {
@@ -13,11 +16,18 @@ class LeftSideDoubleColLayout extends Component {
   }
 
   render() {
-    const { page2Load } = this.state
     return (
       <div>
         <Header />
-        {this.props.children}
+        <Container>
+          <Row>
+            <Col className="leftBar">
+              <UserLeftMenu />
+            </Col>
+            <Col className="mainArea">{this.props.children}</Col>
+          </Row>
+        </Container>
+
         <Footer />
       </div>
     )
