@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import SingleColLayout from '../containers/layouts/SingleColLayout'
+import SingleColLayout from '../src/components/layouts/SingleColLayout'
 import axios from 'axios'
 
 import {
@@ -36,6 +36,7 @@ const initialState = {
     uCPassword: '',
   },
   isSubmitable: false,
+  isregisterSuccessful: '',
 }
 
 const charStrOnly = RegExp(/^[a-zA-Z]+$/)
@@ -152,8 +153,6 @@ export default class register extends React.Component {
     e.preventDefault()
 
     if (isFormValid(this.state.formErrors)) {
-      console.log('submit the form online' /*this.state.formData*/)
-
       let {
         uFirstName,
         uLastName,
@@ -171,11 +170,13 @@ export default class register extends React.Component {
           uPassword,
         })
         .then(response => {
-          console.log(response)
+          console.log('registration successfull', response)
+          this.setState({ isregisterSuccessful: 'Success' })
         })
         .catch(error => console.log(error))
     }
     console.log("Invalid form, couldn't post the data")
+    this.setState({ isregisterSuccessful: 'Failed' })
   }
 
   render() {
@@ -185,6 +186,17 @@ export default class register extends React.Component {
           <Jumbotron className="rounded-5 registerForm">
             <h2 className="display-5 font-weight-bold">Register</h2>
             <hr className="my-2" />
+            {this.state.isregisterSuccessful === 'Success' && (
+              <Alert color="success">
+                {`You have been registered successfully. Please check your email,
+                we have send the account verification email.`}
+              </Alert>
+            )}
+            {this.state.isregisterSuccessful === 'Failed' && (
+              <Alert color="danger">
+                {`Could not retister you at the moment please try again or contact us`}
+              </Alert>
+            )}
             <Form autoComplete="off" onSubmit={this.handleSubmit}>
               <FormGroup>
                 <Label for="userFirstname">First Name</Label>

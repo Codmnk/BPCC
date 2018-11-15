@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
 
-import './HowItWorks.css'
+import './index.css'
 
 import {
   Container,
@@ -16,9 +16,9 @@ import {
   CardSubtitle,
   Button,
 } from 'reactstrap'
-import HowItWorksHeader from '../../components/home/HowItWorksHeader'
+import HowItWorksHeader from './HowItWorksHeader'
 
-const HowItWorks = props => {
+const Index = props => {
   return (
     <React.Fragment>
       <HowItWorksHeader />
@@ -26,4 +26,4 @@ const HowItWorks = props => {
   )
 }
 
-export default HowItWorks
+export default Index

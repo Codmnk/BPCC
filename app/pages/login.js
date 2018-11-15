@@ -1,6 +1,7 @@
 import React from 'react'
-import SingleColLayout from '../containers/layouts/SingleColLayout'
+import SingleColLayout from '../src/components/layouts/SingleColLayout'
 import Link from 'next/link'
+import axios from 'axios'
 import {
   Button,
   Form,
@@ -12,12 +13,17 @@ import {
 } from 'reactstrap'
 import './loginNregister.css'
 
+const apiUrl = process.env.API_URL || 'http://localhost:3030'
+const apiEndPoint = `${apiUrl}/login`
+
 const initialState = {
+  userId: '',
   uEmail: '',
   uPassword: '',
   uEmailErr: '',
   uPasswordErr: '',
   isMailSent: false,
+  islogedIn: false,
 }
 
 const emailRegex = RegExp(
@@ -34,25 +40,29 @@ export default class login extends React.Component {
     e.preventDefault()
 
     const { name, value } = e.target
-    let emailErr = ''
+    let err = ''
     let passErr = ''
 
     switch (name) {
       case 'uEmail':
-        emailErr = emailRegex.test(value) ? '' : 'Invalid Email!'
+        err = { uEmailErr: emailRegex.test(value) ? '' : 'Invalid Email!' }
         break
 
       case 'uPassword':
-        passErr =
-          value.length > 30 ? 'Password must have maximum of 30 characters' : ''
+        err = {
+          uPasswordErr:
+            value.length > 30
+              ? 'Password must have maximum of 30 characters'
+              : '',
+        }
         break
 
       default:
         return
     }
     this.setState({
-      uEmailErr: emailErr,
-      uPasswordErr: passErr,
+      [name]: value,
+      err,
     })
   }
 
@@ -62,10 +72,32 @@ export default class login extends React.Component {
 
     //IF NO ERROR, SEND EMAIL
     !uEmailErr && !uPasswordErr
-      ? console.log('get jwt or unauthorize')
+      ? this.signinSubmit()
       : console.log(`Failed to send`)
   }
 
+  signinSubmit = () => {
+    const { uEmail, uPassword } = this.state
+    console.log('get jwt or unauthorize', this.state)
+    axios
+      .post(apiEndPoint, {
+        uEmail,
+        uPassword,
+      })
+      .then(response => {
+        console.log(response.data)
+        this.saveAuthTokenSession(response.data.token)
+        this.setState({
+          userId: response.data.userId,
+          islogedIn: true,
+        })
+      })
+      .catch(err => console.log(err))
+  }
+
+  saveAuthTokenSession = token => {
+    window.sessionStorage.setItem('token', token)
+  }
   render() {
     const { uEmailErr, uPasswordErr } = this.state
     return (
@@ -106,7 +138,7 @@ export default class login extends React.Component {
               </FormGroup>
               <Button
                 color="primary"
-                disabled={uEmailErr || uPasswordErr ? 'disabled' : false}
+                disabled={uEmailErr || uPasswordErr ? true : false}
               >
                 Submit
               </Button>

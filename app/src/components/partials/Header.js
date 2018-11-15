@@ -16,7 +16,7 @@ import {
   DropdownItem,
 } from 'reactstrap'
 
-import Styles from '../../pages/index.css'
+import Styles from '../../../pages/index.css'
 
 export default class Header extends React.Component {
   constructor(props) {
@@ -25,6 +25,7 @@ export default class Header extends React.Component {
     this.toggle = this.toggle.bind(this)
     this.state = {
       isOpen: false,
+      isLoginedIn: false,
     }
   }
 

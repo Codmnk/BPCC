@@ -3,16 +3,17 @@ import React, { Component } from 'react'
 import Header from '../../components/partials/Header'
 import Footer from '../../components/partials/Footer'
 
-export default class SingleColLayout extends Component {
+class LeftSideDoubleColLayout extends Component {
   constructor(props) {
     super(props)
     this.state = {
       isLoginFrmOpen: false,
+      page2Load: 'home',
     }
   }
 
   render() {
-    const { isLoginFrmOpen } = this.state
+    const { page2Load } = this.state
     return (
       <div>
         <Header />
@@ -22,3 +23,5 @@ export default class SingleColLayout extends Component {
     )
   }
 }
+
+export default LeftSideDoubleColLayout

@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import JumbotronUI from '../jumbotron/JumbotronUI'
+import JumbotronUI from '../../jumbotron/JumbotronUI'
 
-export default class TravelInfo extends Component {
+export default class ShopperInfo extends Component {
   constructor() {
     super()
     this.state = {
       data: [
         {
           index: 1,
-          title: 'Treveler first you do this',
+          title: 'Shopper first you do this',
           description: 'this is how your do things',
           imgUrl: '#',
         },
@@ -35,6 +35,7 @@ export default class TravelInfo extends Component {
       ],
     }
   }
+
   render() {
     const { data } = this.state
 
@@ -44,7 +45,7 @@ export default class TravelInfo extends Component {
     return (
       <div>
         <div className="mb-2 mt-2 text-center">
-          Write some selling point for Treveler here
+          Write some promotion and selling stratigy to attrack user.
         </div>
         {jumbotronComp}
       </div>

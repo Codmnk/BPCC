@@ -18,11 +18,15 @@ app.prepare().then(() => {
   })
 
   server.get('/login', (req, res) => {
-    return app.render(req, res, '/login', { id: req.params.id })
+    return app.render(req, res, '/login')
   })
 
   server.get('/register', (req, res) => {
-    return app.render(req, res, '/register', { id: req.params.id })
+    return app.render(req, res, '/register')
+  })
+
+  server.get('/user', (req, res) => {
+    return app.render(req, res, '/user')
   })
 
   server.get('*', (req, res) => {

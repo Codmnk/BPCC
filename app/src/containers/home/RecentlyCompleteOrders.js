@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import './RecentlyCompleteOrders.css'
 import CardUI from '../../components/cards/CardUI'
+import './RecentlyCompleteOrders.css'
 
 import { Button } from 'reactstrap'
 

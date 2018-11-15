@@ -1,0 +1,20 @@
+* {
+  /* box-sizing: border-box; */
+}
+
+a {
+  color: #fff;
+}
+a.nav-link {
+  color: #fff;
+  font-weight: 700;
+}
+
+.lead {
+  font-size: 1.4em;
+}
+
+footer.page-footer {
+  background: #212529;
+  color: #fff;
+}
