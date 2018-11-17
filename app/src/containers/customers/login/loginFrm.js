@@ -1,7 +1,9 @@
 import React from 'react'
-import SingleColLayout from '../src/components/layouts/SingleColLayout'
+import SingleColLayout from '../../../components/layouts/SingleColLayout'
 import Link from 'next/link'
 import Router from 'next/router'
+import fetch from 'isomorphic-unfetch'
+
 import axios from 'axios'
 import {
   Button,
@@ -12,7 +14,8 @@ import {
   Alert,
   Jumbotron,
 } from 'reactstrap'
-import './loginNregister.css'
+
+import './login.css'
 
 const apiUrl = process.env.API_URL || 'http://localhost:3030'
 const apiEndPoint = `${apiUrl}/login`
@@ -31,7 +34,7 @@ const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 )
 
-export default class login extends React.Component {
+class loginFrm extends React.Component {
   constructor() {
     super()
     this.state = initialState
@@ -80,20 +83,45 @@ export default class login extends React.Component {
   signinSubmit = () => {
     const { uEmail, uPassword } = this.state
     console.log('get jwt or unauthorize', this.state)
-    axios
-      .post(apiEndPoint, {
+
+    fetch(apiEndPoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
         uEmail,
         uPassword,
-      })
-      .then(response => {
-        console.log(response.data)
-        this.saveAuthTokenSession(response.data.token)
+      }),
+    }).then(async res => {
+      if (res.status === 200) {
+        const response = await res.json()
+        console.log(response)
+        const { success, token, userId } = response
+
+        console.log(token)
+        this.saveAuthTokenSession(token)
         this.setState({
-          userId: response.data.userId,
+          userId: response.userId,
           islogedIn: true,
         })
-      })
-      .catch(err => console.log(err))
+      }
+    })
+
+    // axios
+    //   .post(apiEndPoint, {
+    //     uEmail,
+    //     uPassword,
+    //   })
+    //   .then(response => {
+    //     console.log(response.data)
+    //     this.saveAuthTokenSession(response.data.token)
+    //     this.setState({
+    //       userId: response.data.userId,
+    //       islogedIn: true,
+    //     })
+    //   })
+    //   .catch(err => console.log(err))
   }
 
   saveAuthTokenSession = token => {
@@ -163,3 +191,4 @@ export default class login extends React.Component {
     )
   }
 }
+export default loginFrm

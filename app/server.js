@@ -9,14 +9,17 @@ const handle = app.getRequestHandler()
 app.prepare().then(() => {
   const server = express()
 
-  server.get('/login', (req, res) => {
-    return app.render(req, res, '/login')
-  })
-
   server.get('/register', (req, res) => {
     return app.render(req, res, '/register')
   })
 
+  server.get('/', (req, res) => {
+    return app.render(req, res, '/', { query: req.params, path: 'home' })
+  })
+
+  server.get('/login', (req, res) => {
+    return app.render(req, res, '/', { query: req.params, path: 'login' })
+  })
   server.get(
     '/customer/:slug?',
     /** use auth middleware */ (req, res) => {
@@ -27,16 +30,12 @@ app.prepare().then(() => {
     }
   )
 
-  server.get('/', (req, res) => {
-    return app.render(req, res, '/', { query: req.params, path: 'home' })
-  })
-
   server.get('*', (req, res) => {
     return handle(req, res)
   })
 
-  server.listen(port, '192.168.43.191', err => {
+  server.listen(port, err => {
     if (err) throw err
-    console.log(`> Ready on http://192.168.43.191:${port}`)
+    console.log(`> Ready on http://localhost:${port}`)
   })
 })
