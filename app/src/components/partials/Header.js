@@ -72,7 +72,7 @@ export default class Header extends React.Component {
             light
             className="navbar navbar-expand-md pt-3 pb-3"
           >
-            <Link prefetch href="/">
+            <Link href="/">
               <NavbarBrand href="/">BackPacker Courier</NavbarBrand>
             </Link>
             <NavbarToggler onClick={this.toggle} />

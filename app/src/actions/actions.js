@@ -1,6 +1,11 @@
-import { LOGIN_SUBMIT } from '../constants'
+import { PAGE_TO_LOAD } from '../constants'
 
-export const userLogin = frmData => ({
-  type: LOGIN_SUBMIT,
-  payload: frmData,
+const pageInfo = {
+  query: { slug: '' },
+  path: 'home',
+}
+
+export const mapPag = () => ({
+  type: PAGE_TO_LOAD,
+  payload: pageInfo,
 })

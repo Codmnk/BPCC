@@ -10,17 +10,20 @@
     "express": "^4.16.4",
     "isomorphic-unfetch": "^3.0.0",
     "next": "^7.0.2",
+    "next-redux-wrapper": "^2.0.0",
     "prop-types": "^15.6.2",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-particles-js": "^2.3.0",
     "react-redux": "^5.1.1",
     "reactstrap": "^6.5.0",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "faker": "^4.1.0",
-    "nodemon": "^1.18.5"
+    "nodemon": "^1.18.5",
+    "redux-devtools-extension": "^2.13.5"
   },
   "scripts": {
     "dev": "nodemon server",

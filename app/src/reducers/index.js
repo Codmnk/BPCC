@@ -1,9 +1,3 @@
-import { combineReducers } from 'redux'
+import pageMapReducer from './pageMapReducer'
 
-import { authentication } from './authReducer'
-
-const rootReducer = combineReducers({
-  authentication,
-})
-
-export default rootReducer
+export default pageMapReducer

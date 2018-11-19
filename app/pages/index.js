@@ -1,40 +1,33 @@
 import React, { Component } from 'react'
+import porpsType from 'prop-types'
+import { bindActionCreators } from 'redux'
+import initStore from '../src/stores/initialStore'
+import { mapPag } from '../src/actions'
+import withRedux from 'next-redux-wrapper'
+
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import Home from '../src/containers/home'
 import Customer from '../src/containers/customers/dashboard'
 import Login from '../src/containers/customers/login'
 
-export default class index extends Component {
-  static async getInitialProps({ req, query }) {
-    const initialState = {
-      pageTitle: '',
-      input: '',
-      imageUrl: '',
-      Page2Load: '',
-      isSignedIn: false,
-      isprofileOpen: false,
-      user: {
-        id: '',
-        name: '',
-        email: '',
-        joined: '',
+class Index extends Component {
+  static async getInitialProps({}) {
+    console.log('hello form getinitialprops')
+    return {
+      initStore: {
+        pageInfo: {
+          query: { slug: '' },
+          path: 'home',
+        },
       },
-      pageInfo: {
-        query, //{ query: { slug: undefined }, path: 'customer' }
-      },
-      recentlyCompletedOrders: {
-        orders: {},
-      },
-      recentlyAddedOrder: {},
     }
-
-    return { initialState }
   }
 
   constructor(props) {
+    console.log('hello form constructor')
     super(props)
-    this.state = props.initialState
+    this.state = props.initStore
   }
 
   getLayout(uri) {
@@ -57,3 +50,5 @@ export default class index extends Component {
     return <Container />
   }
 }
+
+export default Index
