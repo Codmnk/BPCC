@@ -5,7 +5,7 @@ import { PAGE_TO_LOAD } from '../constants'
 const initialStore = {
   pageInfo: {
     query: { slug: '' },
-    path: 'home',
+    path: '',
   },
 }
 
@@ -15,7 +15,7 @@ const pageMapReducer = (state = initialStore, action = {}) => {
     case PAGE_TO_LOAD:
       return {
         ...state,
-        payload,
+        pageInfo: { ...state.pageInfo, payload },
       }
 
       break

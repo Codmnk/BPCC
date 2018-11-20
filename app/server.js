@@ -20,6 +20,11 @@ app.prepare().then(() => {
   server.get('/login', (req, res) => {
     return app.render(req, res, '/', { query: req.params, path: 'login' })
   })
+
+  server.get('/earn-money', (req, res) => {
+    return app.render(req, res, '/', { query: req.params, path: 'earn-money' })
+  })
+
   server.get(
     '/customer/:slug?',
     /** use auth middleware */ (req, res) => {

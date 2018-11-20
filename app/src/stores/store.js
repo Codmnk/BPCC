@@ -6,13 +6,14 @@ import pageMapReducer from '../reducers/pageMapReducer'
 //initial state
 // import startState from './initialStore'
 const startState = {
-  pageInfo: {
-    query: { slug: '' },
-    path: 'home',
-  },
+  // pageInfo: {
+  //   query: { slug: '' },
+  //   path: '',
+  // },
 }
+
 const rootReducer = combineReducers({
-  pageMapReducer,
+  Page: pageMapReducer,
 })
 
 //create Store
