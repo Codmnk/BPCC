@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import porpsType from 'prop-types'
+import PorpTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { mapPag } from '../src/actions'
 import withRedux from 'next-redux-wrapper'
@@ -16,26 +16,25 @@ import EarnMoney from '../src/containers/earnMoney'
 
 class Index extends Component {
   static async getInitialProps({ store, req, query }) {
-    //dispatch the action
+    // dispatch the action
     store.dispatch(mapPag(query))
 
     return {
       query,
     }
-    // initStore: {
-    // pageInfo: {
-    //   query: { slug: '' },
-    //   path: 'home',
-    // },
-
-    // },
   }
 
-  constructor(props) {
-    super(props)
-    this.state = props.query
-    console.log('from the constructor .......', this.state, '...')
+  componentWillMount() {
+    const { query, getMapPag, page } = this.props
+    console.log('from cwm', page)
+    getMapPag(query)
   }
+
+  // constructor(props) {
+  //   super(props)
+  //   this.state = props.query
+  //   console.log('from the constructor .......', this.state, '...')
+  // }
 
   getLayout(uri) {
     switch (uri) {
@@ -54,22 +53,28 @@ class Index extends Component {
   }
 
   render() {
-    // const { path } = this.state.pageInfo.query
-    const { path } = this.state
-    console.log(path)
+    const { path } = this.props.page
+    console.log('from render', path)
+    // const { path } = this.props.page.pageInfo.payload
     const Container = this.getLayout(path)
 
     return <Container />
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    mapPag: bindActionCreators(mapPag, dispatch),
-  }
-}
+const mapStateToProps = state => ({
+  page: state.Page.pageInfo.payload,
+})
 
+const mapDispatchToProps = dispatch => ({
+  getMapPag: bindActionCreators(mapPag, dispatch),
+})
+
+Index.propTypes = {
+  page: PorpTypes.object.isRequired,
+  getMapPag: PorpTypes.func.isRequired,
+}
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Index)

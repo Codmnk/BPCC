@@ -5,7 +5,7 @@ import { PAGE_TO_LOAD } from '../constants'
 const initialStore = {
   pageInfo: {
     query: { slug: '' },
-    path: '',
+    path: 'home',
   },
 }
 

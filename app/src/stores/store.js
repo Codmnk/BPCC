@@ -4,13 +4,7 @@ import thunkMilldeware from 'redux-thunk'
 import pageMapReducer from '../reducers/pageMapReducer'
 
 //initial state
-// import startState from './initialStore'
-const startState = {
-  // pageInfo: {
-  //   query: { slug: '' },
-  //   path: '',
-  // },
-}
+const startState = {}
 
 const rootReducer = combineReducers({
   Page: pageMapReducer,
