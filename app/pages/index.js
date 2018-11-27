@@ -16,25 +16,10 @@ import EarnMoney from '../src/containers/earnMoney'
 
 class Index extends Component {
   static async getInitialProps({ store, req, query }) {
-    // dispatch the action
-    store.dispatch(mapPag(query))
-
     return {
       query,
     }
   }
-
-  componentWillMount() {
-    const { query, getMapPag, page } = this.props
-    console.log('from cwm', page)
-    getMapPag(query)
-  }
-
-  // constructor(props) {
-  //   super(props)
-  //   this.state = props.query
-  //   console.log('from the constructor .......', this.state, '...')
-  // }
 
   getLayout(uri) {
     switch (uri) {
@@ -53,28 +38,14 @@ class Index extends Component {
   }
 
   render() {
-    const { path } = this.props.page
-    console.log('from render', path)
-    // const { path } = this.props.page.pageInfo.payload
+    const { path } = this.props.query
     const Container = this.getLayout(path)
 
     return <Container />
   }
 }
 
-const mapStateToProps = state => ({
-  page: state.Page.pageInfo.payload,
-})
-
-const mapDispatchToProps = dispatch => ({
-  getMapPag: bindActionCreators(mapPag, dispatch),
-})
-
 Index.propTypes = {
-  page: PorpTypes.object.isRequired,
-  getMapPag: PorpTypes.func.isRequired,
+  query: PorpTypes.object.isRequired,
 }
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Index)
+export default Index

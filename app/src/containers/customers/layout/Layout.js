@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import Link from 'next/link'
 import Breadcrumb from './Breadcrumb'
 import Footer from '../../../components/partials/Footer'
 import './layout.css'
@@ -9,9 +10,11 @@ export default class Layout extends Component {
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-          <a className="navbar-brand" href="#">
-            Navbar
-          </a>
+          <Link href="/">
+            <a className="navbar-brand" h>
+              Navbar
+            </a>
+          </Link>
           <button
             id="side-bar-toggler"
             className="navbar-toggler"
