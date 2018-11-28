@@ -1,18 +1,43 @@
 import React from 'react'
 
+import Link from 'next/link'
+
 const LeftBarMenu = () => {
   return (
     <div id="sidebar">
       <nav>
         <ul className="list-unstyled components">
-          <p>Dashboard</p>
+          <li>
+            <Link href="/customer">
+              <a>Dashboard</a>
+            </Link>
+          </li>
           <hr />
-          <li className="active">
+          <li>
+            <Link href="/customer/profile">
+              <a>Profile</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/customer/shopper">
+              <a>Shopper</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/customer/backpacker">
+              <a>Backpacker</a>
+            </Link>
+          </li>
+
+          {/* IF SUBMENU REQUIRED */}
+          {/* <li className="active dropdown">
             <a
-              href="#homeSubmenu"
+              href="#!"
+              role="button"
               data-toggle="collapse"
               aria-expanded="false"
               className="dropdown-toggle"
+              data-terget="#homeSubmenu"
             >
               <i className="fas fa-home" /> Home
             </a>
@@ -21,10 +46,7 @@ const LeftBarMenu = () => {
                 <a href="#">Home 1</a>
               </li>
             </ul>
-          </li>
-          <li>
-            <a href="#">About</a>
-          </li>
+          </li> */}
         </ul>
       </nav>
     </div>

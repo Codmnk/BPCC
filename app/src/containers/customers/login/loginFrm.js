@@ -1,10 +1,10 @@
 import React from 'react'
+
 import SingleColLayout from '../../../components/layouts/SingleColLayout'
 import Link from 'next/link'
 import Router from 'next/router'
 // import fetch from 'isomorphic-unfetch'
 import axios from 'axios'
-import classnames from 'classnames'
 
 import {
   Button,
@@ -86,6 +86,7 @@ class loginFrm extends React.Component {
 
   signinSubmit = () => {
     const { uEmail, uPassword } = this.state
+    const { getCustomer } = this.props
 
     // USING AXIOS
     axios
@@ -95,14 +96,17 @@ class loginFrm extends React.Component {
       })
       .then(response => {
         console.log('axios response', response.data)
-        this.saveAuthTokenSession(response.data.token)
+
+        this.saveAuthTokenSession(response.data)
         this.setState({
           userId: response.data.userId,
           islogedIn: true,
         })
+
+        getCustomer(response.data)
       })
       .catch(err => {
-        console.log('from catch', err)
+        // console.log('from catch', err)
         this.setState({
           ...this.state,
           errorResponse: 'Incorrect login details!',
@@ -110,8 +114,10 @@ class loginFrm extends React.Component {
       })
   }
 
-  saveAuthTokenSession = token => {
-    window.sessionStorage.setItem('token', token)
+  // DISPATCH ACTION
+
+  saveAuthTokenSession = data => {
+    window.sessionStorage.setItem('custInfo', JSON.stringify(data))
     Router.push('/customer')
   }
   render() {
@@ -179,4 +185,7 @@ class loginFrm extends React.Component {
     )
   }
 }
+
+// Abc@def1
+
 export default loginFrm

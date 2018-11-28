@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 
 import Header from '../../../components/partials/Header'
 import Breadcrumb from './Breadcrumb'
@@ -7,31 +7,32 @@ import Footer from '../../../components/partials/Footer'
 
 import './layout.css'
 
-const LeftSideDoubleColLayout = () => {
-  return (
-    <div>
-      <Header />
-      <div className="main-body">
-        <LeftBarMenu />
-        <div className="roundborader-5">
-          <div id="content">
-            <Breadcrumb />
-            {/* <dv className="main-content">{this.props.children}</dv> */}
-            <div className="main-content">hello form test dashboard</div>
-          </div>
+class LeftSideDoubleColLayout extends Component {
+  render() {
+    return (
+      <div>
+        <Header />
+        <div className="main-body">
+          <LeftBarMenu />
+          <div className="roundborader-5">
+            <div id="content">
+              <Breadcrumb />
+              <div className="main-content">{this.props.children}</div>
+            </div>
 
-          <Footer />
+            <Footer />
+          </div>
         </div>
-      </div>
-      {/* <script>
+        {/* <script>
           $(document).ready(function()
           {$('#side-bar-toggler').on('click', function() {
             $('#sidebar').toggleClass('active')
           })}
           )
         </script> */}
-    </div>
-  )
+      </div>
+    )
+  }
 }
 
 export default LeftSideDoubleColLayout

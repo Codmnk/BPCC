@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import Head from 'next/head'
 import Link from 'next/link'
 import Router from 'next/router'
@@ -40,15 +39,18 @@ export default class Header extends React.Component {
     })
   }
   async componentDidMount() {
-    const jwt = await window.sessionStorage.getItem('token')
-    // jwt = await JSON.parse(jwt)
-    console.log(jwt)
-    jwt && this.setState({ isLoginedIn: true })
+    const custObj = await window.sessionStorage.getItem('custInfo')
+    if (custObj) {
+      const custInfo = await JSON.parse(custObj)
+      const { token } = custInfo
+      // console.log('frm cwm', token)
+      token && this.setState({ isLoginedIn: true })
+    }
   }
 
   logOut() {
-    console.log('you hit this')
-    window.sessionStorage.removeItem('token')
+    // console.log('you hit this')
+    window.sessionStorage.removeItem('custInfo')
 
     Router.push('/')
     // this.setState({
@@ -78,7 +80,7 @@ export default class Header extends React.Component {
           <Navbar
             color="info"
             light
-            className="navbar navbar-expand-md pt-3 pb-3"
+            className="navbar navbar-expand-md pt-3 pb-3 top-navbar"
           >
             <Link href="/">
               <NavbarBrand href="/">BackPacker Courier</NavbarBrand>

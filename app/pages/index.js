@@ -16,32 +16,34 @@ import EarnMoney from '../src/containers/earnMoney'
 
 class Index extends Component {
   static async getInitialProps({ store, req, query }) {
+    // console.log(query)
     return {
       query,
     }
   }
 
-  getLayout(uri) {
-    switch (uri) {
+  getLayout(query) {
+    const { path, slug } = query
+    switch (path) {
       case 'customer':
-        return Customer
+        return <Customer subUriSlug={slug} />
         break
       case 'login':
-        return Login
+        return <Login />
         break
       case 'earn-money':
-        return EarnMoney
+        return <EarnMoney />
         break
       default:
-        return Home
+        return <Home />
     }
   }
 
   render() {
-    const { path } = this.props.query
-    const Container = this.getLayout(path)
+    const { query } = this.props
 
-    return <Container />
+    const Container = this.getLayout(query)
+    return Container
   }
 }
 

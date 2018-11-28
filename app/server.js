@@ -8,28 +8,29 @@ const handle = app.getRequestHandler()
 
 app.prepare().then(() => {
   const server = express()
+  // const auth = require('.src/helper/auth')
 
   server.get('/register', (req, res) => {
     return app.render(req, res, '/register')
   })
 
   server.get('/', (req, res) => {
-    return app.render(req, res, '/', { query: req.params, path: 'home' })
+    return app.render(req, res, '/', { ...req.params, path: 'home' })
   })
 
   server.get('/login', (req, res) => {
-    return app.render(req, res, '/', { query: req.params, path: 'login' })
+    return app.render(req, res, '/', { ...req.params, path: 'login' })
   })
 
   server.get('/earn-money', (req, res) => {
-    return app.render(req, res, '/', { query: req.params, path: 'earn-money' })
+    return app.render(req, res, '/', { ...req.params, path: 'earn-money' })
   })
 
   server.get(
     '/customer/:slug?',
     /** use auth middleware */ (req, res) => {
       return app.render(req, res, '/', {
-        query: req.params,
+        ...req.params,
         path: 'customer',
       })
     }

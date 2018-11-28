@@ -5,11 +5,8 @@ import Footer from '../../components/partials/Footer'
 // import LeftBarMenu from '../../components/user/leftBar/LeftBarMenu'
 
 class SingleColLayout extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isLoginFrmOpen: false,
-    }
+  state = {
+    isLoginFrmOpen: false,
   }
 
   render() {

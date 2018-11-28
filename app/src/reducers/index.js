@@ -1,3 +1,12 @@
-import pageMapReducer from './pageMapReducer'
+import { combineReducers } from 'redux'
 
-export default pageMapReducer
+import pageMapReducer from './pageMapReducer'
+import customerReducer from './customerReducer'
+
+const rootReducer = combineReducers({
+  Page: pageMapReducer,
+  Customer: customerReducer,
+})
+
+export default rootReducer
+// export default pageMapReducer

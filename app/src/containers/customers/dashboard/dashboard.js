@@ -1,16 +1,52 @@
 import React, { Component } from 'react'
 import reactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-// import Layout from '../layout/Layout'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+
+import { customerInfo } from '../../../actions/index'
+
+import Profile from '../../../containers/customers/profile'
+import Shopper from '../../../containers/customers/shopper'
+import Backpacker from '../../../containers/customers/backpacker'
 
 import LeftSideDoubleColLayout from '../../../components/customers/layout/LeftSideDoubleColLayout'
 
-export default class dashboard extends Component {
+class Dashboard extends Component {
+  static async getInitialProps(store) {
+    store.dispatch(customerInfo())
+  }
+
+  getComponent(subUriSlug) {
+    switch (subUriSlug) {
+      case 'profile':
+        return <Profile />
+        break
+      case 'shopper':
+        return <Shopper />
+        break
+      case 'backpacker':
+        return <Backpacker />
+        break
+      default:
+        return
+    }
+  }
+
   render() {
-    return (
-      <LeftSideDoubleColLayout>
-        <div>Hello form dashboard</div>
-      </LeftSideDoubleColLayout>
-    )
+    let { subUriSlug } = this.props
+
+    const Component = this.getComponent(subUriSlug)
+
+    return <LeftSideDoubleColLayout>{Component}</LeftSideDoubleColLayout>
   }
 }
+
+const mapStateToProps = state => ({
+  customer: state.Customer.customer,
+})
+// const mapDispatchToProps = dispatch => {
+//   getCustomer: bindActionCreators(null, dispatch)
+// }
+
+export default connect(mapStateToProps)(Dashboard)
