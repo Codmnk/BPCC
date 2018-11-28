@@ -2,9 +2,10 @@ import React from 'react'
 import SingleColLayout from '../../../components/layouts/SingleColLayout'
 import Link from 'next/link'
 import Router from 'next/router'
-import fetch from 'isomorphic-unfetch'
-
+// import fetch from 'isomorphic-unfetch'
 import axios from 'axios'
+import classnames from 'classnames'
+
 import {
   Button,
   Form,
@@ -21,13 +22,12 @@ const apiUrl = process.env.API_URL || 'http://localhost:3030'
 const apiEndPoint = `${apiUrl}/login`
 
 const initialState = {
-  userId: '',
   uEmail: '',
   uPassword: '',
   uEmailErr: '',
   uPasswordErr: '',
-  isMailSent: false,
   islogedIn: false,
+  errorResponse: '',
 }
 
 const emailRegex = RegExp(
@@ -35,93 +35,79 @@ const emailRegex = RegExp(
 )
 
 class loginFrm extends React.Component {
-  constructor() {
-    super()
-    this.state = initialState
-  }
+  state = initialState
 
   handleChange = e => {
     e.preventDefault()
 
     const { name, value } = e.target
     let err = ''
-    let passErr = ''
-
     switch (name) {
       case 'uEmail':
-        err = { uEmailErr: emailRegex.test(value) ? '' : 'Invalid Email!' }
+        err = emailRegex.test(value) ? '' : 'Invalid Email!'
+        this.setState(state => ({
+          state,
+          uEmailErr: err,
+        }))
         break
 
       case 'uPassword':
-        err = {
-          uPasswordErr:
-            value.length > 30
-              ? 'Password must have maximum of 30 characters'
-              : '',
-        }
+        err =
+          (value.length < 6 && 'Password is too short ') ||
+          (value.length > 30 && 'Password is too long')
+
+        this.setState(state => ({
+          ...state,
+          uPasswordErr: err,
+        }))
         break
 
       default:
         return
     }
-    this.setState({
+    this.setState(state => ({
+      ...state,
       [name]: value,
       err,
-    })
+    }))
   }
 
   handleSubmit = e => {
     e.preventDefault()
     const { uEmailErr, uPasswordErr } = this.state
 
-    //IF NO ERROR, SEND EMAIL
+    //IF NO ERROR, SEND LOGIN REQUEST API
     !uEmailErr && !uPasswordErr
       ? this.signinSubmit()
-      : console.log(`Failed to send`)
+      : this.setState({
+          errorResponse: 'Failed to send a submit request',
+        })
   }
 
   signinSubmit = () => {
     const { uEmail, uPassword } = this.state
-    console.log('get jwt or unauthorize', this.state)
 
-    fetch(apiEndPoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+    // USING AXIOS
+    axios
+      .post(apiEndPoint, {
         uEmail,
         uPassword,
-      }),
-    }).then(async res => {
-      if (res.status === 200) {
-        const response = await res.json()
-        console.log(response)
-        const { success, token, userId } = response
-
-        console.log(token)
-        this.saveAuthTokenSession(token)
+      })
+      .then(response => {
+        console.log('axios response', response.data)
+        this.saveAuthTokenSession(response.data.token)
         this.setState({
-          userId: response.userId,
+          userId: response.data.userId,
           islogedIn: true,
         })
-      }
-    })
-
-    // axios
-    //   .post(apiEndPoint, {
-    //     uEmail,
-    //     uPassword,
-    //   })
-    //   .then(response => {
-    //     console.log(response.data)
-    //     this.saveAuthTokenSession(response.data.token)
-    //     this.setState({
-    //       userId: response.data.userId,
-    //       islogedIn: true,
-    //     })
-    //   })
-    //   .catch(err => console.log(err))
+      })
+      .catch(err => {
+        console.log('from catch', err)
+        this.setState({
+          ...this.state,
+          errorResponse: 'Incorrect login details!',
+        })
+      })
   }
 
   saveAuthTokenSession = token => {
@@ -129,11 +115,12 @@ class loginFrm extends React.Component {
     Router.push('/customer')
   }
   render() {
-    const { uEmailErr, uPasswordErr } = this.state
+    const { uEmailErr, uPasswordErr, errorResponse } = this.state
     return (
       <SingleColLayout>
         <div className="container">
           <Jumbotron className="rounded-5 loginForm">
+            {errorResponse && <Alert color="danger">{errorResponse}</Alert>}
             <h2 className="display-5 font-weight-bold">Login</h2>
             <hr className="my-2" />
             <Form onSubmit={this.handleSubmit}>
@@ -157,6 +144,7 @@ class loginFrm extends React.Component {
                   name="uPassword"
                   id="userPassword"
                   placeholder="Password"
+                  minLength="6"
                 />
                 {uPasswordErr && <Alert color="danger">{uPasswordErr}</Alert>}
               </FormGroup>

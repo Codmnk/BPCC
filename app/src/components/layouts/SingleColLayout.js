@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import Header from '../../components/partials/Header'
 import Footer from '../../components/partials/Footer'
-import LeftBarMenu from '../../components/user/leftBar/LeftBarMenu'
+// import LeftBarMenu from '../../components/user/leftBar/LeftBarMenu'
 
 class SingleColLayout extends Component {
   constructor(props) {
